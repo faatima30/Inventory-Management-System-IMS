@@ -32,7 +32,7 @@ export default function Sale() {
     Price: "",
     datePurchased: "",
   });
- 
+
   useEffect(() => {
     fetcher();
     // alldata();
@@ -67,7 +67,7 @@ export default function Sale() {
     axios
       .delete(`${endpoint}/Purchase/delete/${id}`)
       .then((response) => {
-        alert("Sale is deleted successfully");
+        alert("Purchase is deleted successfully");
       })
       .catch((error) => {
         console.log(error);
@@ -79,17 +79,17 @@ export default function Sale() {
     try {
       if (isedit) {
         let obj = {
-          CusName: purchaseObj.customerID,
+          supplier: purchaseObj.supplierID,
           Product: purchaseObj.productID,
-          qtySold: purchaseObj.qtySold,
+          qtyPurchased: purchaseObj.qtyPurchased,
           Price: purchaseObj.Price,
-          dateSold: purchaseObj.dateSold,
+          datePurchased: purchaseObj.datePurchased,
         };
-        let updatedEndPoint = `${endpoint}/Sale/update/${purchaseObj._id}`;
+        let updatedEndPoint = `${endpoint}/Purchase/update/${purchaseObj._id}`;
         await axios
           .put(updatedEndPoint, obj, headers)
           .then((response) => {
-            alert("Sale has been updated successfully");
+            alert("Purchase has been updated successfully");
             mutate(endpoint, fetcher);
             setisedit(false);
             setisopen(false);
@@ -99,9 +99,9 @@ export default function Sale() {
           });
       } else {
         await axios
-          .post(`${endpoint}/AddSale`, purchaseObj, headers)
+          .post(`${endpoint}/AddPurchase`, purchaseObj, headers)
           .then((response) => {
-            alert("Sale has been save successfully");
+            alert("Purchase has been save successfully");
             setisopen(false);
             setisedit(false);
             mutate(endpoint, fetcher);
@@ -122,16 +122,16 @@ export default function Sale() {
     setisopen(!isopen);
   };
   async function fetcher() {
-    const { data } = await axios.get(`http://localhost:4000/Sale`);
+    const { data } = await axios.get(`http://localhost:4000/Purchases`);
     return data;
   }
 
-  const { data: SaleData  } = useSWR(endpoint, fetcher);
+  const { data: purchaseData } = useSWR(endpoint, fetcher);
   const data = {
     columns: [
       {
-        label: "Customer Name",
-        field: "customerID",
+        label: "supplier Name",
+        field: "supplierID",
         sort: "asc",
         width: 100,
       },
@@ -142,8 +142,8 @@ export default function Sale() {
         width: 100,
       },
       {
-        label: "Quantity Sold",
-        field: "qtySold",
+        label: "Quantity Purchased",
+        field: "qtyPurchased",
         sort: "asc",
         width: 100,
       },
@@ -154,8 +154,8 @@ export default function Sale() {
         width: 100,
       },
       {
-        label: "Date Sold",
-        field: "dateSold",
+        label: "Date purchased",
+        field: "datePurchased",
         sort: "asc",
         width: 100,
       },
@@ -178,7 +178,7 @@ export default function Sale() {
         width: 100,
       },
     ],
-    rows: SaleData?.map((data) => {
+    rows: purchaseData?.map((data) => {
       data.action = (
         <div className="d-flex">
           <button
@@ -210,7 +210,7 @@ export default function Sale() {
             <Modal isOpen={isopen}>
               <div className="modal-header">
                 <h5 className="modal-title mt-0" id="myModalLabel">
-                  Add Sale
+                  Add Purchase
                 </h5>
                 <button
                   type="button"
@@ -240,24 +240,22 @@ export default function Sale() {
                     <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
                         <Label htmlFor="validationCustom02">
-                          select customer name:
+                          select supplier name:
                         </Label>
                         <AvField
-                          name="customerID"
-                          placeholder="select customer name"
+                          name="supplierID"
+                          placeholder="select supplier name"
                           type="select"
-                          value={purchaseObj.CusName}
+                          value={purchaseObj.supplier}
                           onChange={(e) => handelChange(e)}
-                          errorMessage="select customer name"
+                          errorMessage="select supplier name"
                           className="form-control"
                           validate={{ required: { value: true } }}
                           id="validationCustom02"
                         >
-                          <option selected>Select customer name</option>
-                          {getsup.map((cust) => {
-                            return (
-                              <option value={cust._id}>{cust.Name}</option>
-                            );
+                          <option selected>Select supplier name</option>
+                          {getsup.map((sup) => {
+                            return <option value={sup._id}>{sup.name}</option>;
                           })}
                         </AvField>
                       </FormGroup>
@@ -288,15 +286,15 @@ export default function Sale() {
                     <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
                         <Label htmlFor="validationCustom02">
-                          Quantity Sold:
+                          Quantity purchased:
                         </Label>
                         <AvField
-                          name="qtySold"
-                          placeholder="Enter Quantity Sold"
+                          name="qtyPurchased"
+                          placeholder="Enter Quantity Purchased"
                           type="number"
-                          value={purchaseObj.qtySold}
+                          value={purchaseObj.qtyPurchased}
                           onChange={(e) => handelChange(e)}
-                          errorMessage="Enter Quantity sold"
+                          errorMessage="Enter Quantity Purchased"
                           className="form-control"
                           validate={{ required: { value: true } }}
                           id="validationCustom02"
@@ -321,14 +319,16 @@ export default function Sale() {
                     </Col>
                     <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
-                        <Label htmlFor="validationCustom02">Date Sold:</Label>
+                        <Label htmlFor="validationCustom02">
+                          Date Purchased:
+                        </Label>
                         <AvField
-                          name="dateSold"
-                          placeholder="Enter date Sold"
+                          name="datePurchased"
+                          placeholder="Enter date Purchased"
                           type="date"
-                          value={purchaseObj.dateSold}
+                          value={purchaseObj.datePurchased}
                           onChange={(e) => handelChange(e)}
-                          errorMessage="Enter date Sold"
+                          errorMessage="Enter date Purchased"
                           className="form-control"
                           validate={{ required: { value: true } }}
                           id="validationCustom02"
@@ -343,11 +343,11 @@ export default function Sale() {
                     onClick={() => {
                       tog_standard();
                       setpurchaseObj({
-                        CusName: "",
+                        supplier: "",
                         Product: "",
-                        qtySold: "",
+                        qtyPurchased: "",
                         Price: "",
-                        dateSold: "",
+                        datePurchased: "",
                       });
                     }}
                     className="btn btn-secondary waves-effect"
@@ -379,4 +379,19 @@ export default function Sale() {
               marginBottom: "10px",
             }}
             data-toggle="modal"
-        
+            data-target="#myModal"
+          >
+            +Add Purchased
+          </button>
+          <Card>
+            <CardBody>
+              <CardTitle className="h4">Purchase table </CardTitle>
+              <MDBDataTable responsive striped bordered data={data} />
+            </CardBody>
+          </Card>
+        </Col>
+      </div>
+      <Footer />
+    </div>
+  );
+}

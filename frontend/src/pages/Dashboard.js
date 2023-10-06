@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidenav from "../components/SideNav";
@@ -26,13 +26,13 @@ function Dashbaord() {
   const navigte = useNavigate();
 
   const user = localStorage.getItem("user");
-  const protectRoute = useCallback(() => {
+  const protectRoute = () => {
     if (user) {
       navigte("/");
     } else {
       navigte("/login");
     }
-  },[user])
+  };
   const getTotalProducts = () => {
     axios.get("http://localhost:4000/product/total").then((response) => {
       setTotalProducts(response.data.totalProducts);
@@ -60,12 +60,12 @@ function Dashbaord() {
   };
 
   useEffect(() => {
-    protectRoute();
     getTotalProducts();
     getTotalCustomers();
     getTotalPrice();
     getTotalWarehouse();
-  }, [protectRoute]);
+    protectRoute();
+  }, []);
 
   return (
     <div className="d-flex ">
