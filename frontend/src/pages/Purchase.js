@@ -26,8 +26,8 @@ export default function Sale() {
   const [getsup, setgetsup] = useState([]);
   const [getpro, setgetpro] = useState([]);
   const [purchaseObj, setpurchaseObj] = useState({
-    supplier: "",
-    Product: "",
+    supplierName: "",
+    ProductName: "",
     qtyPurchased: "",
     Price: "",
     datePurchased: "",
@@ -79,8 +79,8 @@ export default function Sale() {
     try {
       if (isedit) {
         let obj = {
-          supplier: purchaseObj.supplierID,
-          Product: purchaseObj.productID,
+          supplierName: purchaseObj.supplierID?.name,
+          ProductName: purchaseObj.productID?.name,
           qtyPurchased: purchaseObj.qtyPurchased,
           Price: purchaseObj.Price,
           datePurchased: purchaseObj.datePurchased,
@@ -246,7 +246,7 @@ export default function Sale() {
                           name="supplierID"
                           placeholder="select supplier name"
                           type="select"
-                          value={purchaseObj.supplier}
+                          value={purchaseObj.supplierName}
                           onChange={(e) => handelChange(e)}
                           errorMessage="select supplier name"
                           className="form-control"
@@ -269,7 +269,7 @@ export default function Sale() {
                           name="productID"
                           placeholder="select product name"
                           type="select"
-                          value={purchaseObj.Product}
+                          value={purchaseObj.ProductName}
                           onChange={(e) => handelChange(e)}
                           errorMessage="select product name"
                           className="form-control"
@@ -343,8 +343,8 @@ export default function Sale() {
                     onClick={() => {
                       tog_standard();
                       setpurchaseObj({
-                        supplier: "",
-                        Product: "",
+                        supplierName: "",
+                        ProductName: "",
                         qtyPurchased: "",
                         Price: "",
                         datePurchased: "",

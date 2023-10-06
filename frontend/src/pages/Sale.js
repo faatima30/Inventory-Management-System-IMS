@@ -79,8 +79,8 @@ export default function Sale() {
     try {
       if (isedit) {
         let obj = {
-          CusName: saleObj.customerID,
-          Product: saleObj.productID,
+          CusName: saleObj.customerID?.Name,
+          Product: saleObj.productID?.name,
           qtySold: saleObj.qtySold,
           Price: saleObj.Price,
           dateSold: saleObj.dateSold,

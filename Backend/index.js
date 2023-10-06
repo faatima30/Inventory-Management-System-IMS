@@ -286,7 +286,17 @@ app.delete("/Inventory/delete/:id", async (req, res) => {
 //Purchase part
 
 app.get("/Purchases", async (req, res) => {
-  const getData = await PurchaseModel.find();
+  const getData = await PurchaseModel.find()
+    // .populate({
+    //   path: "supplierID",
+    //   model: "Suppliers",
+    //   select: "-_id name",
+    // })
+    // .populate({
+    //   path: "productID",
+    //   model: "Products",
+    //   select: "-_id name ",
+    // });
   res.send(getData);
 });
 
@@ -306,10 +316,10 @@ app.post("/AddPurchase", async (req, res) => {
     if (!supplierdata) return res.send("supplier name not found");
     const Productdata = await ProductModel.findOne({ _id: req.body.productID });
     if (!Productdata) return res.send("product name not found");
-    const purchasedata = await new SalesModel(req.body);
+    const purchasedata = await new PurchaseModel(req.body);
     let productqty = Productdata.quantity + parseInt(req.body.qtyPurchased);
 
-    await Saledata.save();
+    await purchasedata.save();
     await ProductModel.findByIdAndUpdate(
       req.body.productID,
       {
