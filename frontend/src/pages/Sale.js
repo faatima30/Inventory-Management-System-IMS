@@ -35,22 +35,19 @@ export default function Sale() {
  
   useEffect(() => {
     fetcher();
-    // alldata();
+    alldata();
   }, []);
-  // const alldata = async () => {
-  //   const cusdata = await axios
-  //     .get("http://localhost:4000/Customers", headers)
-  //     .then((res) => setgetcust(res.data))
-  //     .catch((err) => console.log(err));
-  //   const prodata = await axios
-  //     .get("http://localhost:4000/Products", headers)
-  //     .then((res) => setgetpro(res.data))
-  //     .catch((err) => console.log(err));
-  //     const { products } = prodata;
-  //     const { customers } = cusdata;
-  //     const allData = { products, customers };
-  //   return (allData)
-  // };
+  const alldata = async () => {
+    const cusdata = await axios
+      .get("http://localhost:4000/Customers", headers)
+      .then((res) => setgetcust(res.data))
+      .catch((err) => console.log(err));
+    const prodata = await axios
+      .get("http://localhost:4000/Products", headers)
+      .then((res) => setgetpro(res.data))
+      .catch((err) => console.log(err));
+    return { ...cusdata, ...prodata, data };
+  };
   let token = localStorage.getItem("token");
   const headers = {
     headers: {
@@ -126,18 +123,18 @@ export default function Sale() {
     return data;
   }
 
-  const { data: SaleData  } = useSWR(endpoint, fetcher);
+  const { data: SaleData } = useSWR(endpoint, fetcher);
   const data = {
     columns: [
       {
         label: "Customer Name",
-        field: "customerID",
+        field: "customerID?.Name",
         sort: "asc",
         width: 100,
       },
       {
         label: "Product",
-        field: "productID",
+        field: "productID?.name",
         sort: "asc",
         width: 100,
       },

@@ -16,7 +16,7 @@
 .sidenav {
   transition: width 0.7s;
   width: 15%;
-  height:100vh;
+  height: 100vh;
   overflow: hidden;
   position: fixed;
   float: left;
@@ -50,7 +50,7 @@
 }
 .sidenav ul li a:hover {
   border-bottom: 4px solid rgb(43, 141, 141);
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
 }
 .sidenav button {
   margin-left: 70%;

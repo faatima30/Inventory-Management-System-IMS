@@ -29,28 +29,27 @@ export default function Sale() {
     supplierName: "",
     ProductName: "",
     qtyPurchased: "",
-    Price: "",
     datePurchased: "",
   });
 
   useEffect(() => {
     fetcher();
-    // alldata();
+    alldata();
   }, []);
-  // const alldata = async () => {
-  //   const cusdata = await axios
-  //     .get("http://localhost:4000/Customers", headers)
-  //     .then((res) => setgetsup(res.data))
-  //     .catch((err) => console.log(err));
-  //   const prodata = await axios
-  //     .get("http://localhost:4000/Products", headers)
-  //     .then((res) => setgetpro(res.data))
-  //     .catch((err) => console.log(err));
-  //     const { products } = prodata;
-  //     const { customers } = cusdata;
-  //     const allData = { products, customers };
-  //   return (allData)
-  // };
+  const alldata = async () => {
+    const cusdata = await axios
+      .get("http://localhost:4000/Suppliers", headers)
+      .then((res) => setgetsup(res.data))
+      .catch((err) => console.log(err));
+    const prodata = await axios
+      .get("http://localhost:4000/Products", headers)
+      .then((res) => setgetpro(res.data))
+      .catch((err) => console.log(err));
+    const { products } = prodata;
+    const { customers } = cusdata;
+    const allData = { products, customers };
+    return allData;
+  };
   let token = localStorage.getItem("token");
   const headers = {
     headers: {
@@ -82,7 +81,6 @@ export default function Sale() {
           supplierName: purchaseObj.supplierID?.name,
           ProductName: purchaseObj.productID?.name,
           qtyPurchased: purchaseObj.qtyPurchased,
-          Price: purchaseObj.Price,
           datePurchased: purchaseObj.datePurchased,
         };
         let updatedEndPoint = `${endpoint}/Purchase/update/${purchaseObj._id}`;
@@ -144,12 +142,6 @@ export default function Sale() {
       {
         label: "Quantity Purchased",
         field: "qtyPurchased",
-        sort: "asc",
-        width: 100,
-      },
-      {
-        label: "Price",
-        field: "Price",
         sort: "asc",
         width: 100,
       },
@@ -301,22 +293,7 @@ export default function Sale() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="12" md="6" lg="12">
-                      <FormGroup className="mb-3">
-                        <Label htmlFor="validationCustom02">Price:</Label>
-                        <AvField
-                          name="Price"
-                          placeholder="Enter Price"
-                          type="number"
-                          value={purchaseObj.Price}
-                          onChange={(e) => handelChange(e)}
-                          errorMessage="Enter Price"
-                          className="form-control"
-                          validate={{ required: { value: true } }}
-                          id="validationCustom02"
-                        />
-                      </FormGroup>
-                    </Col>
+
                     <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
                         <Label htmlFor="validationCustom02">
@@ -346,7 +323,6 @@ export default function Sale() {
                         supplierName: "",
                         ProductName: "",
                         qtyPurchased: "",
-                        Price: "",
                         datePurchased: "",
                       });
                     }}
