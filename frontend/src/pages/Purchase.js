@@ -37,7 +37,7 @@ export default function Sale() {
     alldata();
   }, []);
   const alldata = async () => {
-    const cusdata = await axios
+    const supdata = await axios
       .get("http://localhost:4000/Suppliers", headers)
       .then((res) => setgetsup(res.data))
       .catch((err) => console.log(err));
@@ -45,10 +45,7 @@ export default function Sale() {
       .get("http://localhost:4000/Products", headers)
       .then((res) => setgetpro(res.data))
       .catch((err) => console.log(err));
-    const { products } = prodata;
-    const { customers } = cusdata;
-    const allData = { products, customers };
-    return allData;
+    return { ...supdata, ...prodata, data };
   };
   let token = localStorage.getItem("token");
   const headers = {

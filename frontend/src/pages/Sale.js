@@ -32,7 +32,7 @@ export default function Sale() {
     Price: "",
     dateSold: "",
   });
- 
+
   useEffect(() => {
     fetcher();
     alldata();
