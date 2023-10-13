@@ -6,9 +6,12 @@ import Supplier from "./pages/Supplier";
 import Warehouse from "./pages/Warehouse";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Forgotpwd from "./pages/Forgotpwd";
 import Sale from "./pages/Sale";
 import Purchase from "./pages/Purchase";
 import Employee from "./pages/Employee";
+import Gallery from "./components/Gallery";
 function App() {
   return (
     <Routes>
@@ -22,6 +25,9 @@ function App() {
       <Route path="/Purchases" element={<Purchase />} />
       <Route path="/Employees" element={<Employee />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/Signup" element={<Signup />} />
+      <Route path="/Forgotpwd" element={<Forgotpwd />} />
+      <Route path="/Gallery" element={<Gallery />} />
     </Routes>
   );
 }

@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 
 const LoginModel = mongoose.Schema(
   {
-    EmployeeID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employees",
+    email: {
+      type: String,
       required: true,
     },
     username: {

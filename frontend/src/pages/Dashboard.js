@@ -23,14 +23,14 @@ function Dashbaord() {
   const [totalProducts, setTotalProducts] = useState("");
   const [totalPrice, setTotalPrice] = useState(" ");
   const [totalWarehouse, setTotalWarehouse] = useState(" ");
-  const navigte = useNavigate();
+  const navigate = useNavigate();
 
   const user = localStorage.getItem("user");
   const protectRoute = () => {
     if (user) {
-      navigte("/");
+      navigate("/");
     } else {
-      navigte("/login");
+      navigate("/login");
     }
   };
   const getTotalProducts = () => {
@@ -65,13 +65,13 @@ function Dashbaord() {
     getTotalPrice();
     getTotalWarehouse();
     protectRoute();
-  }, []);
+  });
 
   return (
     <div className="d-flex ">
       <Sidenav />
-      <div className="dash">
-      {/* <Header/> */}
+      <div className="dashboard">
+        {/* <Header/> */}
         <div className="page-content">
           <Container>
             <Row className="align-items-center">

@@ -45,7 +45,7 @@ function Login() {
           backgroundPosition: "center",
         }}
       ></div>
-      <div className="wrapper-page account-page-full">
+      <div className="account-page-full">
         <Card className="shadow-none">
           <div className="card-block">
             <div className="account-box">
@@ -118,7 +118,7 @@ function Login() {
                           className="btn w-md waves-effect waves-light text-white "
                           type="submit"
                           onClick={loginUSer}
-                          style={{backgroundColor:"rgb(36, 99, 99)"}}
+                          style={{ backgroundColor: "rgb(36, 99, 99)" }}
                         >
                           Log In
                         </button>
@@ -127,15 +127,24 @@ function Login() {
 
                     <Row className="mb-3 mt-2 mb-0">
                       <div className="col-12 mt-3">
-                        <Link to="pages-recoverpw-2">
+                        <Link to="/Forgotpwd">
                           <i className="mdi mdi-lock"></i> Forgot your password?
                         </Link>
                       </div>
                     </Row>
                   </form>
 
-                  <div className="mt-5  pt-5 text-center">
+                  <div className="mt-4  pt-5 text-center">
                     <p>
+                      Don't have an account ?
+                      <Link
+                        to="/Signup"
+                        className="fw-medium-medium text-primary"
+                      >
+                        Signup now
+                      </Link>
+                    </p>
+                    <p className="mt-4">
                       © {new Date().getFullYear()} IMS. Crafted with
                       <AiOutlineHeart
                         style={{ color: "red", marginLeft: "5px" }}

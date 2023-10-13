@@ -28,9 +28,21 @@ app.listen(4000, () => {
 });
 //login
 app.post("/login", async (req, res) => {
-  const LoginData = LoginModel(req.body);
-  const savedlogin = await LoginData.save();
-  res.send(savedlogin);
+  const existingUser = await LoginModel.findOne({ email: req.body.email });
+  if (existingUser) {
+    // The email is already used
+    res.send({status: "error",message: "email already registered"});
+    return;
+  } else {
+    const user = await EmployeeModel.findOne({ email: req.body.email });
+    if (user) {
+      const LoginData = LoginModel(req.body);
+      const savedlogin = await LoginData.save();
+      res.send(savedlogin);
+    } else {
+      res.send("invalid email");
+    }
+  }
 });
 app.get("/login", async (req, res) => {
   const getData = await LoginModel.find();
@@ -49,6 +61,24 @@ app.post("/login/user", async (req, res) => {
     }
   } else {
     res.send("Username or Password required");
+  }
+});
+//forget password
+app.put("/login/forgotpwd", async (req, res) => {
+  const user = await LoginModel.findOne({ email: req.body.email });
+  if (user) {
+    if(req.body.password===req.body.confirm){
+       await LoginModel.updateOne(
+        { email: req.body.email },
+        { $set: { password: req.body.password } }
+      );
+      res.send({status: "ok",message: "password successfully updated"});
+    }
+    else{
+      res.send({status: "error",message: "please confirm password"});
+    }
+  } else {
+    res.send("invalid email");
   }
 });
 
@@ -286,17 +316,17 @@ app.delete("/Inventory/delete/:id", async (req, res) => {
 //Purchase part
 
 app.get("/Purchases", async (req, res) => {
-  const getData = await PurchaseModel.find()
-    // .populate({
-    //   path: "supplierID",
-    //   model: "Suppliers",
-    //   select: "-_id name",
-    // })
-    // .populate({
-    //   path: "productID",
-    //   model: "Products",
-    //   select: "-_id name ",
-    // });
+  const getData = await PurchaseModel.find();
+  // .populate({
+  //   path: "supplierID",
+  //   model: "Suppliers",
+  //   select: "-_id name",
+  // })
+  // .populate({
+  //   path: "productID",
+  //   model: "Products",
+  //   select: "-_id name ",
+  // });
   res.send(getData);
 });
 

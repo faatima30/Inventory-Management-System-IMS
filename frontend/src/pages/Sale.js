@@ -128,13 +128,13 @@ export default function Sale() {
     columns: [
       {
         label: "Customer Name",
-        field: "customerID?.Name",
+        field: "customerID",
         sort: "asc",
         width: 100,
       },
       {
         label: "Product",
-        field: "productID?.name",
+        field: "productID",
         sort: "asc",
         width: 100,
       },

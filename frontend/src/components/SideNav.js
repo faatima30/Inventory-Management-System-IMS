@@ -8,6 +8,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { BsBox2Fill, BsFillPeopleFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImMenu } from "react-icons/im";
+import { TfiGallery } from "react-icons/tfi";
 
 function Sidenav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,20 +25,26 @@ function Sidenav() {
       style={{ width: isOpen === false ? "15%" : "fit-content" }}
     >
       <div className="logo d-flex">
-        <h1 style={{ display: isOpen === false ? "block" : "none" }}>IMS Logo</h1>
+        <h1 style={{ display: isOpen === false ? "block" : "none" }}>
+          IMS Logo
+        </h1>
         <div>
           <button
-            onClick={()=>{handleIsOpen()}}
+            onClick={() => {
+              handleIsOpen();
+            }}
             style={{
               marginTop: isOpen === true ? "-20px" : "",
               display: isOpen === false ? "block" : "none",
             }}
           >
-            <AiOutlineClose size="30px" color="white"  />
+            <AiOutlineClose size="30px" color="white" />
           </button>
 
           <button
-             onClick={()=>{handleIsOpen()}}
+            onClick={() => {
+              handleIsOpen();
+            }}
             style={{
               marginLeft: isOpen === true ? "1px" : "15px",
               display: isOpen === true ? "block" : "none",
@@ -63,6 +70,15 @@ function Sidenav() {
             <BsBox2Fill />{" "}
             <span style={{ display: isOpen === false ? "block" : "none" }}>
               Products
+            </span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/Gallery">
+            {" "}
+            <TfiGallery />{" "}
+            <span style={{ display: isOpen === false ? "block" : "none" }}>
+              Gallery
             </span>
           </NavLink>
         </li>

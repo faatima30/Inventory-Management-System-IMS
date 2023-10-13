@@ -20,15 +20,15 @@
   overflow: hidden;
   position: fixed;
   float: left;
-  padding: 5px 10px;
+  padding: 5px 20px;
   color: white;
   border-right: 4px solid rgb(43, 141, 141);
-  background-color: rgb(3, 50, 50);
+  background-color: rgb(4, 37, 37);
   z-index: 9;
 }
 .sidenav ul {
   list-style: none;
-  margin-top: 20px;
+  margin-top: 17px;
 }
 .sidenav ul li {
   padding: 15px 10px;
@@ -57,12 +57,20 @@
   background-color: transparent;
   border: none;
 }
-.dash {
+.dashboard {
   margin-top: 85px;
   width: 100%;
   position: absolute;
   left: 260px;
   width: calc(100% - 300px);
+}
+.dash {
+  margin-top: 120px;
+  width: 100%;
+  position: absolute;
+  left: 250px;
+  width: calc(100% - 300px);
+  z-index: 2;
 }
 .accountbg {
   position: absolute;
