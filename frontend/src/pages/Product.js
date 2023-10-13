@@ -24,19 +24,20 @@ export default function Product() {
   const endpoint = "http://localhost:4000";
   const [isedit, setisedit] = useState(false);
   const [isopen, setisopen] = useState(false);
+  const [setImage] = useState(null)
   const [productObj, setproductObj] = useState({
     name: "",
     description: "",
     category: "",
     price: "",
     quantity: "",
-    // image: "",
+    image: null,
   });
-  
+
   let token = localStorage.getItem("token");
   const headers = {
     headers: {
-      "content-type": "application/json",
+      "content-type": "multipart/form-data",
       token: token,
     },
   };
@@ -65,7 +66,7 @@ export default function Product() {
           category: productObj.category,
           price: productObj.price,
           quantity: productObj.quantity,
-          //   image: productObj.image,
+          image: productObj.image,
         };
         let updatedEndPoint = `${endpoint}/Product/update/${productObj._id}`;
         await axios
@@ -144,12 +145,12 @@ export default function Product() {
         sort: "asc",
         width: 100,
       },
-      //   {
-      //     label: "Image",
-      //     field: "image",
-      //     sort: "asc",
-      //     width: 200,
-      //   },
+      {
+        label: "Image",
+        field: "image",
+        sort: "asc",
+        width: 200,
+      },
 
       {
         label: "date created",
@@ -311,22 +312,24 @@ export default function Product() {
                         />
                       </FormGroup>
                     </Col>
-                    {/* <Col sm="12" md="6" lg="12">
-                    <FormGroup className="mb-3">
-                      <Label htmlFor="validationCustom02">Choose image:</Label>
-                      <AvField
-                        name="totalamount"
-                        placeholder="Enter total amount"
-                        type="file"
-                        value={productObj.totalamount}
-                        onChange={(e) => handelChange(e)}
-                        errorMessage="Choose image"
-                        className="form-control"
-                        validate={{ required: { value: true } }}
-                        id="validationCustom02"
-                      />
-                    </FormGroup>
-                  </Col> */}
+                    <Col sm="12" md="6" lg="12">
+                      <FormGroup className="mb-3">
+                        <Label htmlFor="validationCustom02">
+                          Choose image:
+                        </Label>
+                        <AvField
+                          name="totalamount"
+                          placeholder="Enter total amount"
+                          type="file"
+                          value={productObj.image}
+                          onChange={(event) => {setImage(event.target.files[0])}}
+                          errorMessage="Choose image"
+                          className="form-control"
+                          validate={{ required: { value: true } }}
+                          id="validationCustom02"
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </div>
                 <div className="modal-footer">
@@ -340,7 +343,7 @@ export default function Product() {
                         category: "",
                         price: "",
                         quantity: "",
-                        // image: "",
+                        image: null,
                       });
                     }}
                     className="btn btn-secondary waves-effect"

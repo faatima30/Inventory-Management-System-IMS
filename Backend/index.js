@@ -13,6 +13,7 @@ const WarehousesModel = require("./model/WarehousesModel");
 const LoginModel = require("./model/LoginModel");
 app.use(express.json());
 app.use(cors());
+const multer = require("multer");
 
 mongoose
   .connect("mongodb://0.0.0.0:27017/InventoryDatabase")
@@ -31,7 +32,7 @@ app.post("/login", async (req, res) => {
   const existingUser = await LoginModel.findOne({ email: req.body.email });
   if (existingUser) {
     // The email is already used
-    res.send({status: "error",message: "email already registered"});
+    res.send({ status: "error", message: "email already registered" });
     return;
   } else {
     const user = await EmployeeModel.findOne({ email: req.body.email });
@@ -67,15 +68,14 @@ app.post("/login/user", async (req, res) => {
 app.put("/login/forgotpwd", async (req, res) => {
   const user = await LoginModel.findOne({ email: req.body.email });
   if (user) {
-    if(req.body.password===req.body.confirm){
-       await LoginModel.updateOne(
+    if (req.body.password === req.body.confirm) {
+      await LoginModel.updateOne(
         { email: req.body.email },
         { $set: { password: req.body.password } }
       );
-      res.send({status: "ok",message: "password successfully updated"});
-    }
-    else{
-      res.send({status: "error",message: "please confirm password"});
+      res.send({ status: "ok", message: "password successfully updated" });
+    } else {
+      res.send({ status: "error", message: "please confirm password" });
     }
   } else {
     res.send("invalid email");
@@ -96,9 +96,29 @@ app.get("/Product/single/:id", async (req, res) => {
 
   res.send(data);
 });
+const imageLocation = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "ProductImage");
+  },
 
-app.post("/AddProduct", async (req, res) => {
-  const newData = ProductModel(req.body);
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const uploadImage = multer({
+  storage: imageLocation,
+});
+
+app.post("/AddProduct", uploadImage.single("image"), async (req, res) => {
+  const newData = ProductModel({
+    name: req.body.name,
+    description: req.body.description,
+    category: req.body.category,
+    price: req.body.price,
+    quantity: req.body.quantity,
+    image: req.file.filename,
+  });
   const saveData = await newData.save();
   res.send(saveData);
 });
