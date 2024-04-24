@@ -65,7 +65,7 @@ function Dashbaord() {
     getTotalPrice();
     getTotalWarehouse();
     protectRoute();
-  });
+  },[]);
 
   return (
     <div className="d-flex ">
@@ -82,16 +82,6 @@ function Dashbaord() {
                     Welcome to IMS Dashboard
                   </li>
                 </ol>
-              </Col>
-              <Col md="4">
-                <div
-                  className="float-end d-none d-md-block btn text-white pt-3"
-                  style={{ backgroundColor: "rgb(43, 141, 141)" }}
-                >
-                  <h6>
-                    <AiFillSetting style={{ fontSize: "20px" }} /> Setting
-                  </h6>
-                </div>
               </Col>
             </Row>
             <Row>

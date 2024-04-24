@@ -73,7 +73,7 @@ function Sidenav() {
             </span>
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/Gallery">
             {" "}
             <TfiGallery />{" "}
@@ -81,7 +81,7 @@ function Sidenav() {
               Gallery
             </span>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to="/Warehouses">
             <FaLocationDot />{" "}

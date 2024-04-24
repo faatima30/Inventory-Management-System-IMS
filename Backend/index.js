@@ -14,6 +14,7 @@ const LoginModel = require("./model/LoginModel");
 app.use(express.json());
 app.use(cors());
 const multer = require("multer");
+const path = require("path");
 
 mongoose
   .connect("mongodb://0.0.0.0:27017/InventoryDatabase")
@@ -96,28 +97,28 @@ app.get("/Product/single/:id", async (req, res) => {
 
   res.send(data);
 });
+
 const imageLocation = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "ProductImage");
   },
-
   filename: (req, file, cb) => {
+    // console.log(file);
+    // cb(null, Date.now() +path.extname(file.originalname));
     cb(null, file.originalname);
   },
 });
+const uploadimg = multer({ storage: imageLocation });
 
-const uploadImage = multer({
-  storage: imageLocation,
-});
-
-app.post("/AddProduct", uploadImage.single("image"), async (req, res) => {
+app.post("/AddProduct", uploadimg.single("image"), async (req, res) => {
   const newData = ProductModel({
     name: req.body.name,
     description: req.body.description,
     category: req.body.category,
+    location: req.body.location,
     price: req.body.price,
     quantity: req.body.quantity,
-    image: req.file.filename,
+    // image: req.file.filename,
   });
   const saveData = await newData.save();
   res.send(saveData);

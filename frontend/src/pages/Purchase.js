@@ -190,7 +190,7 @@ export default function Sale() {
     }),
   };
   return (
-    <div className="d-flex">
+    <div className="d-flex" >
       <Sidenav />
 
       <div className="dash">

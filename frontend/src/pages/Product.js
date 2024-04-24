@@ -24,20 +24,21 @@ export default function Product() {
   const endpoint = "http://localhost:4000";
   const [isedit, setisedit] = useState(false);
   const [isopen, setisopen] = useState(false);
-  const [setImage] = useState(null)
+  // const [image, setImage] = useState();
   const [productObj, setproductObj] = useState({
     name: "",
     description: "",
     category: "",
+    location: "",
     price: "",
     quantity: "",
-    image: null,
+    // image: null,
   });
 
   let token = localStorage.getItem("token");
   const headers = {
     headers: {
-      "content-type": "multipart/form-data",
+      "Content-Type": "multipart/form-data",
       token: token,
     },
   };
@@ -60,17 +61,25 @@ export default function Product() {
   const HandelSubmit = async (e) => {
     try {
       if (isedit) {
-        let obj = {
-          name: productObj.name,
-          description: productObj.description,
-          category: productObj.category,
-          price: productObj.price,
-          quantity: productObj.quantity,
-          image: productObj.image,
-        };
+        // let obj = {
+        //   name: productObj.name,
+        //   description: productObj.description,
+        //   category: productObj.category,
+        //   price: productObj.price,
+        //   quantity: productObj.quantity,
+        //   image: productObj.image,
+        // };
+        const formData = new FormData();
+        formData.append("name", productObj.name);
+        formData.append("description", productObj.description);
+        formData.append("category", productObj.category);
+        formData.append("location", productObj.location);
+        formData.append("price", productObj.price);
+        formData.append("quantity", productObj.quantity);
+        // formData.append("image", productObj.image);
         let updatedEndPoint = `${endpoint}/Product/update/${productObj._id}`;
         await axios
-          .put(updatedEndPoint, obj, headers)
+          .put(updatedEndPoint, formData, headers)
           .then((response) => {
             alert("Product has been updated successfully");
             mutate(endpoint, fetcher);
@@ -98,8 +107,18 @@ export default function Product() {
     }
   };
 
+  // const handelChange = (e) => {
+  //   setproductObj({ ...productObj, [e.target.name]: e.target.value });
+  // };
   const handelChange = (e) => {
-    setproductObj({ ...productObj, [e.target.name]: e.target.value });
+    if (e.target.type === "file") {
+      // Handle file input separately
+      // setImage(e.target.files[0]);
+      setproductObj({ ...productObj, [e.target.name]: e.target.files[0] });
+    } else {
+      // Handle text inputs
+      setproductObj({ ...productObj, [e.target.name]: e.target.value });
+    }
   };
 
   const tog_standard = () => {
@@ -134,6 +153,12 @@ export default function Product() {
         width: 100,
       },
       {
+        label: "Store",
+        field: "location",
+        sort: "asc",
+        width: 100,
+      },
+      {
         label: "Price",
         field: "price",
         sort: "asc",
@@ -145,12 +170,12 @@ export default function Product() {
         sort: "asc",
         width: 100,
       },
-      {
-        label: "Image",
-        field: "image",
-        sort: "asc",
-        width: 200,
-      },
+      // {
+      //   label: "Image",
+      //   field: "image",
+      //   sort: "asc",
+      //   width: 200,
+      // },
 
       {
         label: "date created",
@@ -189,6 +214,14 @@ export default function Product() {
           >
             <MdDeleteSweep />
           </button>
+          {/* Check if image data is available */}
+          {/* {data.image && (
+            <img
+              src={`data:image/png;base64, ${data.image}`} // Update the server endpoint
+              alt="Product"
+              style={{ width: "50px", height: "50px", objectFit: "cover" }}
+            />
+          )} */}
         </div>
       );
       return data;
@@ -223,6 +256,7 @@ export default function Product() {
                 </button>
               </div>
               <AvForm
+                encType="multipart/form-data"
                 className="needs-validation"
                 onValidSubmit={(e, v) => {
                   HandelSubmit();
@@ -282,6 +316,22 @@ export default function Product() {
                     </Col>
                     <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
+                        <Label htmlFor="validationCustom02">Store:</Label>
+                        <AvField
+                          name="location"
+                          placeholder="Enter store location"
+                          type="text"
+                          value={productObj.location}
+                          onChange={(e) => handelChange(e)}
+                          errorMessage="Enter category"
+                          className="form-control"
+                          validate={{ required: { value: true } }}
+                          id="validationCustom02"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12" md="6" lg="12">
+                      <FormGroup className="mb-3">
                         <Label htmlFor="validationCustom02">Price:</Label>
                         <AvField
                           name="price"
@@ -312,24 +362,24 @@ export default function Product() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="12" md="6" lg="12">
+                    {/* <Col sm="12" md="6" lg="12">
                       <FormGroup className="mb-3">
                         <Label htmlFor="validationCustom02">
                           Choose image:
                         </Label>
                         <AvField
-                          name="totalamount"
-                          placeholder="Enter total amount"
+                          name="image"
                           type="file"
-                          value={productObj.image}
-                          onChange={(event) => {setImage(event.target.files[0])}}
+                          // accept="image/*"
+                          // value={productObj.image}
+                          onChange={(e) => handelChange(e)}
                           errorMessage="Choose image"
                           className="form-control"
                           validate={{ required: { value: true } }}
                           id="validationCustom02"
                         />
                       </FormGroup>
-                    </Col>
+                    </Col> */}
                   </Row>
                 </div>
                 <div className="modal-footer">

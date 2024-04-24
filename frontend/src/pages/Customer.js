@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+// import MetaTags from "react-meta-tags"
 import useSWR, { mutate } from "swr";
 import { MDBDataTable } from "mdbreact";
 import {
@@ -186,6 +187,11 @@ export default function Customer() {
     }),
   };
   return (
+    // <React.Fragment>
+    // <div className="page-content">
+    //   <MetaTags>
+    //     <title>Customers</title>
+    //   </MetaTags>
     <div className="d-flex">
       <Sidenav />
 
@@ -370,5 +376,7 @@ export default function Customer() {
       </div>
       <Footer />
     </div>
+    //  </div>
+    //  </React.Fragment>
   );
 }
