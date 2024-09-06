@@ -176,9 +176,8 @@ export default function Product() {
       //   sort: "asc",
       //   width: 200,
       // },
-
       {
-        label: "date created",
+        label: "date added",
         field: "createdAt",
         sort: "asc",
         width: 100,

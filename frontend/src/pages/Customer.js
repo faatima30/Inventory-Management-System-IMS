@@ -145,12 +145,12 @@ export default function Customer() {
         width: 100,
       },
 
-      {
-        label: "date created",
-        field: "createdAt",
-        sort: "asc",
-        width: 100,
-      },
+      // {
+      //   label: "date created",
+      //   field: "createdAt",
+      //   sort: "asc",
+      //   width: 100,
+      // },
       {
         label: "date updated",
         field: "updatedAt",

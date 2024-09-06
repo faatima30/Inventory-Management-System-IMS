@@ -400,7 +400,7 @@ app.delete("/Purchase/delete/:id", async (req, res) => {
 //Sale part
 
 app.get("/Sale", async (req, res) => {
-  const getData = await SalesModel.find();
+  const getData = await SalesModel.find()
   // .populate({
   //   path: "customerID",
   //   model: "Customers",

@@ -11,7 +11,7 @@ import Forgotpwd from "./pages/Forgotpwd";
 import Sale from "./pages/Sale";
 import Purchase from "./pages/Purchase";
 import Employee from "./pages/Employee";
-import Gallery from "./components/Gallery";
+// import Gallery from "./components/Gallery";
 function App() {
   return (
     <Routes>
@@ -27,7 +27,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/Signup" element={<Signup />} />
       <Route path="/Forgotpwd" element={<Forgotpwd />} />
-      <Route path="/Gallery" element={<Gallery />} />
+      {/* <Route path="/Gallery" element={<Gallery />} /> */}
     </Routes>
   );
 }

@@ -8,9 +8,10 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { BsBox2Fill, BsFillPeopleFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImMenu } from "react-icons/im";
-import { TfiGallery } from "react-icons/tfi";
+// import { TfiGallery } from "react-icons/tfi";
 
 function Sidenav() {
+  // const localStorageData = JSON.parse(localStorage.getItem("user"));
   const [isOpen, setIsOpen] = useState(false);
   const logout = () => {
     localStorage.clear();
